@@ -2,14 +2,14 @@ import { FormEvent, useRef, useState } from "react";
 import { useUser } from "./useUser";
 
 const Form1 = () => {
-  const { getNewLogin } = useUser();
+  const { getNewUser } = useUser()
   const [first, setFirst] = useState(1);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const handleOnSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!inputRef.current) return;
-    await getNewLogin(inputRef.current.value);
+    await getNewUser(inputRef.current.value)
     inputRef.current.value = "";
   };
 
