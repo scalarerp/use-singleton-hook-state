@@ -30,13 +30,13 @@ function App() {
           <div>{user.name}</div>
           <div>{user.login}</div>
           <div>{user.id}</div>
+          <div>{nameLenght}</div>
           {user.avatar_url && (
             <img
               style={{ display: "block", margin: "auto" }}
               src={user.avatar_url}
             ></img>
           )}
-          <div>{nameLenght}</div>
         </>
       )}
     </>
