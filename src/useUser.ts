@@ -6,38 +6,31 @@ interface IUser {
     id: number
     name?: string
     login?: string
-    avatar_url?:string
+    avatar_url?: string
 }
 
 interface IUseUser {
     user: IUser
     getNewUser: (login: string) => Promise<void>
-    nameLenght?: string 
+    nameLenght?: string
 }
 
 const initValues: IUseUser = {
     user: {
         id: 0,
     },
-    getNewUser: async (login: string) => { login===login },
+    getNewUser: async (login: string) => {
+        login === login
+    },
 }
 
 export const useUser = singletonHook(initValues, () => {
     const [user, _setUser] = useState<IUser>(initValues.user)
     const setUser = useCallback((newValue: IUser) => {
         // console.log("change to:", newValue);
+        // persist save opn cookie/localstorage/sessionstorage
         _setUser(newValue)
     }, [])
-
-    //   useEffect(() => {
-    //     if (!me)    {
-    //         console.log('not settings')
-    //     }
-    //   }, [me]);
-
-    //   useEffect(() => {
-    //         console.log('first load')
-    //   }, []);
 
     useEffect(() => {
         console.log('pass here useUser Effect')
@@ -62,7 +55,9 @@ export const useUser = singletonHook(initValues, () => {
         }
     }
 
-    const nameLenght =!user.name?undefined:`${user.name.length||0} caracteres in name`
+    const nameLenght = !user.name
+        ? undefined
+        : `${user.name.length || 0} caracteres in name`
 
     return {
         user,
