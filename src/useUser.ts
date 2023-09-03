@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { useCallback, useEffect, useState } from 'react'
 import { singletonHook } from 'react-singleton-hook'
+// import { getPersist, setPersist } from './util/localStorage'
 
 interface IUser {
     id: number
@@ -15,10 +16,11 @@ interface IUseUser {
     nameLenght?: string
 }
 
+// const initUser = getPersist('User')as IUser||{id:0}
+ const initUser = {id:0}
+
 const initValues: IUseUser = {
-    user: {
-        id: 0,
-    },
+    user: initUser,
     getNewUser: async (login: string) => {
         login === login
     },
@@ -26,9 +28,9 @@ const initValues: IUseUser = {
 
 export const useUser = singletonHook(initValues, () => {
     const [user, _setUser] = useState<IUser>(initValues.user)
-    const setUser = useCallback((newValue: IUser) => {
-        // console.log("change to:", newValue);
-        // persist save opn cookie/localstorage/sessionstorage
+    const handleSetUser = useCallback((newValue: IUser) => {
+        // console.log("change to:", newValue);       
+        // setPersist('User', newValue)
         _setUser(newValue)
     }, [])
 
@@ -44,14 +46,14 @@ export const useUser = singletonHook(initValues, () => {
             if (result.data) {
                 // const { name, id, login } = result.data;
                 console.log(result.data)
-                setUser(result.data)
+                handleSetUser(result.data)
                 return
             }
 
-            setUser(initValues.user)
+            handleSetUser(initValues.user)
         } catch (error) {
             console.log('error', error)
-            setUser(initValues.user)
+            handleSetUser(initValues.user)
         }
     }
 
